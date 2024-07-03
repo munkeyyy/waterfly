@@ -92,7 +92,7 @@ export const getSingleUser = async (req, res) => {
         return res.status(200).json({
           data: usersData,
           message: "users fecthed successfully!",
-          // filepath: "https://waterfly.onrender.com/uploads/users/",
+          // filepath: "https://waterfly.onrender.com/uploads/users/", 
         });
       }
       return res.status(400).json({
