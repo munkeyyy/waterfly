@@ -25,7 +25,7 @@ const ViewInvoice: React.FC<Props> = ({ invId, handleCancel }) => {
   const view = async (id: any) => {
     try {
       const res = await axios.post(
-        `http://localhost:8000/invoice/client/${id}/invoice/generate-monthly?month=${startDate}&year=${endDate}`,
+        `https://waterfly.onrender.com/invoice/client/${id}/invoice/generate-monthly?month=${startDate}&year=${endDate}`,
         {},
       );
       console.log(res.data.data);

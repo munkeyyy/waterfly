@@ -41,7 +41,7 @@ const Invoice = () => {
 const navigate= useNavigate()
   const getInvoices = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/invoice/get-all-invoices');
+      const res = await axios.get('https://waterfly.onrender.com/invoice/get-all-invoices');
       console.log(res.data.data);
       setInvoices(res.data.data);
     } catch (error) {

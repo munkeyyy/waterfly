@@ -67,7 +67,7 @@ const SingleSupply = () => {
   const handleSingleSupply=async(id:any)=>{
     try {
 
-      const res= await axios.get(`http://localhost:8000/supplies/get-supplies/${id}`)
+      const res= await axios.get(`https://waterfly.onrender.com/supplies/get-supplies/${id}`)
       console.log(res.data.data)
       setSingleBottle(res.data.data)
       showModal()
@@ -80,7 +80,7 @@ const SingleSupply = () => {
   const getClient = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/clients/get-clients/${clientId}`,
+        `https://waterfly.onrender.com/clients/get-clients/${clientId}`,
       );
       console.log(res.data.data);
       setClient(res.data.data);
@@ -91,7 +91,7 @@ const SingleSupply = () => {
   const getClientSupplies = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/supplies/client-supplies/${clientId}`,
+        `https://waterfly.onrender.com/supplies/client-supplies/${clientId}`,
       );
       console.log(res.data.data);
      
@@ -150,7 +150,7 @@ const SingleSupply = () => {
     Object.values(item).some((value) => matchesQuery(value)),
   );
   const handleSupplyDelete=async(id:any)=>{
-    const res=await axios.delete(`http://localhost:8000/supplies/delete-supply/${id}`)
+    const res=await axios.delete(`https://waterfly.onrender.com/supplies/delete-supply/${id}`)
     notification.success({message:res.data.message})
     filteredSupply.filter((supply)=>supply._id!==id)
     getClientSupplies()
@@ -302,7 +302,7 @@ const SingleSupply = () => {
 
                         axios
                           .put(
-                            `http://localhost:8000/supplies/update-supply/${s._id}`,
+                            `https://waterfly.onrender.com/supplies/update-supply/${s._id}`,
                             values,
                           )
                           .then((res) => {
