@@ -25,7 +25,9 @@ export const generateMonthlyInvoiceForClient = async (req, res) => {
   try {
     const { clientId } = req.params;
     const { month, year } = req.query;
-
+    const existingInvoice=await invoiceModel.findOne({clientId:clientId})
+    const existingsupplies=existingInvoice.supplies.map((supply)=>supply._id)
+    console.log("ws",existingsupplies)
     const invoice = await generateMonthlyInvoice(clientId, month, year);
       console.log(invoice)
     return res.status(201).json({
@@ -61,6 +63,9 @@ export const getAllInvoices = async (req, res) => {
 export const getInvoice = async (req, res) => {
   try {
     const invoiceId = req.params.invoiceId;
+    const existingInvoice=await invoiceModel.findOne({_id: invoiceId})
+    const existingsupplies=existingInvoice.supplies.find((supply)=>supply._id)
+    console.log("exsup2",existingsupplies)
     const invoices = await invoiceModel
       .findOne({ _id: invoiceId })
       .populate("clientId supplies");

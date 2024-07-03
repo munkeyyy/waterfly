@@ -42,16 +42,19 @@ export const getMonthlySuppliesForClient = async (clientId, month, year) => {
 
 export const generateMonthlyInvoice = async (clientId, month, year) => {
   const supplies = await getMonthlySuppliesForClient(clientId, month, year);
+  const existingInvoice=await invoiceModel.findOne({clientId:clientId})
+  const existingsupplies=existingInvoice.supplies.find((supply)=>supply._id)
+  console.log("exsup", existingsupplies)
   console.log('supplies',supplies)
   if (supplies.length === 0) {
-    throw new Error(`No supplies found for ${month}-${year}`);
+    throw new Error(`No supplies found`);
   }
-
+  
     const totalAmount = supplies.reduce(
       (total, supply) => total + supply.quantity * supply.price,
       0
     );
-
+   
    const invoice = new invoiceModel({
       clientId,
       supplies: supplies.map((supply) => supply._id),
