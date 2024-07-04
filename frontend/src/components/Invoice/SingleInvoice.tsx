@@ -61,7 +61,7 @@ const SingleInvoice = () => {
     const getClientInvoice = async () => {
       try {
         const res = await axios.get(
-          `https://waterfly.onrender.com/invoice/get-invoice/${invoiceId}`,
+          `http://localhost:8000/invoice/get-invoice/${invoiceId}`,
         );
         console.log("getClientIn",res.data.data);
         if (res.status === 200) {
@@ -83,7 +83,7 @@ const SingleInvoice = () => {
     const generateMonthlyInvoice = async () => {
       try {
         const res = await axios.post(
-          `https://waterfly.onrender.com/invoice/client/${invoiceId}/invoice/generate-monthly?month=7&year=2024`,
+          `http://localhost:8000/invoice/client/${invoiceId}/invoice/generate-monthly?month=7&year=2024`,
           {},
         );
         console.log(res.data.data);
@@ -99,7 +99,7 @@ const SingleInvoice = () => {
   
     const sendInvoice = async () => {
       try {
-        const res = await axios.post('https://waterfly.onrender.com/mail/send-invoice', {
+        const res = await axios.post('http://localhost:8000/mail/send-invoice', {
           clientId:invoice.clientId._id,
           email: invoice.clientId.email,
           month: month,
@@ -117,7 +117,7 @@ const SingleInvoice = () => {
   
     const handleDeleteInvoice=async(id:any)=>{
       try {
-        const res= await axios.delete(`https://waterfly.onrender.com/invoice/delete-invoice/${id}`)
+        const res= await axios.delete(`http://localhost:8000/invoice/delete-invoice/${id}`)
         console.log(res.data)
         notification.success({message:res.data.message})
         getClientInvoice()

@@ -37,35 +37,37 @@ export const getMonthlySuppliesForClient = async (clientId, month, year) => {
     },
   });
 
+  console.log("supplllyyyyy", supplies);
+
   return supplies;
 };
 
 export const generateMonthlyInvoice = async (clientId, month, year) => {
   const supplies = await getMonthlySuppliesForClient(clientId, month, year);
-  const existingInvoice=await invoiceModel.findOne({clientId:clientId})
-  const existingsupplies=existingInvoice.supplies.find((supply)=>supply._id)
-  console.log("exsup", existingsupplies)
-  console.log('supplies',supplies)
+
+
+
+
+  console.log("supplies", supplies);
   if (supplies.length === 0) {
     throw new Error(`No supplies found`);
   }
-  
-    const totalAmount = supplies.reduce(
-      (total, supply) => total + supply.quantity * supply.price,
-      0
-    );
-   
-   const invoice = new invoiceModel({
-      clientId,
-      supplies: supplies.map((supply) => supply._id),
-      date: new Date(),
-      totalAmount,
-      status: "pending",
-    });
-  
+
+  const totalAmount = supplies.reduce(
+    (total, supply) => total + supply.quantity * supply.price,
+    0
+  );
+
+  const invoice = new invoiceModel({
+    clientId,
+    supplies: supplies.map((supply) => supply._id),
+    date: new Date(),
+    totalAmount,
+    status: "pending",
+  });
 
   await invoice.save();
 
-  console.log("imb", invoice)
+  console.log("imb", invoice);
   return invoice;
 };

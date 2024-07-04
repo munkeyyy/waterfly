@@ -18,3 +18,4 @@ export const InvoiceProvider: React.FC<InvoiceProviderProps> = ({
 };
 
 export default InvoiceProvider;
+

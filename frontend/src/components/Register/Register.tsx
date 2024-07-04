@@ -67,7 +67,7 @@ const Register:React.FC<SetIsChanged> = ({setIsChanged}) => {
               //     setSubmitting(false);
               //   }, 400);
               axios
-                .post(`https://waterfly.onrender.com/users/sign-up`, {
+                .post(`http://localhost:8000/users/sign-up`, {
                   user_name: values.user_name,
                   email: values.email,
                   password: values.password,

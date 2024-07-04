@@ -43,7 +43,7 @@ const Supply = () => {
   const getSupplies = async () => {
     try {
       const res = await axios.get(
-        'https://waterfly.onrender.com/supplies/get-supplies',
+        'http://localhost:8000/supplies/get-supplies',
       );
 
       // console.log(clientIds);
