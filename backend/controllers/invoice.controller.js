@@ -29,29 +29,29 @@ export const generateMonthlyInvoiceForClient = async (req, res) => {
     // const date = new Date(Number(year), Number(month) - 1);
     // const month = new Date(date.getFullYear(), date.getMonth(), 1); // month is 0-indexed
     // const endDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    console.log(month + " to " + year);
-    const supplies = await getMonthlySuppliesForClient(clientId, month, year);
-    const existingInvoice = await invoiceModel.findOne({
-      clientId: clientId,
-      date: {
-        $gte: month,
-        $lt: year,
-      },
-    });
-    console.log("Exist1", existingInvoice);
-    if (existingInvoice) {
-      const existingsuppliesIds = existingInvoice.supplies.map((supply) =>
-        supply.toString()
-      );
-      const newSupplyIds = supplies.map((sup) => sup._id);
-      console.log("existingsuppliesIds", existingsuppliesIds, newSupplyIds);
-      // && existingsuppliesIds.map(id=>newSupplyIds.includes(id))
-      if (existingsuppliesIds.length === newSupplyIds.length) {
-        return res.status(400).json({
-          message: "Invoice already exists",
-        });
-      }
-    }
+    // console.log(month + " to " + year);
+    // const supplies = await getMonthlySuppliesForClient(clientId, month, year);
+    // const existingInvoice = await invoiceModel.findOne({
+    //   clientId: clientId,
+    //   date: {
+    //     $gte: month,
+    //     $lt: year,
+    //   },
+    // });
+    // console.log("Exist1", existingInvoice);
+    // if (existingInvoice) {
+    //   const existingsuppliesIds = existingInvoice.supplies.map((supply) =>
+    //     supply.toString()
+    //   );
+    //   const newSupplyIds = supplies.map((sup) => sup._id);
+    //   console.log("existingsuppliesIds", existingsuppliesIds, newSupplyIds);
+    //   // && existingsuppliesIds.map(id=>newSupplyIds.includes(id))
+    //   if (existingsuppliesIds.length === newSupplyIds.length&&existingsuppliesIds.map(id=>newSupplyIds.includes(id))) {
+    //     return res.status(400).json({
+    //       message: "Invoice already exists",
+    //     });
+    //   }
+    // }
 
     const invoice = await generateMonthlyInvoice(clientId, month, year);
     console.log(invoice);

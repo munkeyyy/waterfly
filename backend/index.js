@@ -8,6 +8,7 @@ import clientRouter from "./routers/client.router.js"
 import supplyRouter from "./routers/supply.router.js"
 import invoiceRouter from "./routers/invoice.routre.js"
 import emailRouter from "./routers/mail.router.js"
+import reportRouter from "./routers/report.router.js"
 
 const app =express()
 app.use(express.json()); //body-parser (to read request body data)
@@ -41,3 +42,4 @@ app.use("/clients",clientRouter)
 app.use("/supplies",supplyRouter)
 app.use("/invoice",invoiceRouter)
 app.use("/mail",emailRouter)
+app.use("/report",reportRouter)

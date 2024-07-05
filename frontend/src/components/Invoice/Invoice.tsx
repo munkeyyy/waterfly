@@ -5,7 +5,7 @@ import Logo from '../../images/logo/images.png';
 import { Tooltip } from 'antd';
 import { TbMailDollar } from 'react-icons/tb';
 import { SearchContext } from '../../Contexts/Search/SearchContext';
-import { TbEyeDollar } from "react-icons/tb";
+import { TbEyeDollar } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 
 interface Client {
@@ -38,10 +38,12 @@ interface InvoiceData {
 const Invoice = () => {
   const [invoices, setInvoices] = useState<InvoiceData[]>([]);
   const { searchQuery } = useContext(SearchContext);
-const navigate= useNavigate()
+  const navigate = useNavigate();
   const getInvoices = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/invoice/get-all-invoices');
+      const res = await axios.get(
+        'http://localhost:8000/invoice/get-all-invoices',
+      );
       console.log(res.data.data);
       setInvoices(res.data.data);
     } catch (error) {
@@ -68,15 +70,35 @@ const navigate= useNavigate()
       return value === queryNumber;
     }
     if (typeof value === 'object' && value !== null) {
-      return Object.values(value).some((nestedValue) => matchesQuery(nestedValue));
+      return Object.values(value).some((nestedValue) =>
+        matchesQuery(nestedValue),
+      );
     }
     return false;
   };
 
-  const filteredInvoices = invoices.filter((item) =>
-    Object.values(item).some((value) => matchesQuery(value)),
+  const uniqueDateRanges = new Set();
+  const filteredByDateRange = invoices.filter((invoice) => {
+    const formattedSuppliesDates = invoice.supplies
+      .map((supply) => new Date(supply.date).toISOString().split('T')[0])
+      .sort();
+    const fromDate = formattedSuppliesDates[0];
+    const toDate = formattedSuppliesDates[formattedSuppliesDates.length - 1];
+    const dateRange = `${fromDate}-${toDate}`;
+
+    if (uniqueDateRanges.has(dateRange)) {
+      return false;
+    } else {
+      uniqueDateRanges.add(dateRange);
+      return true;
+    }
+  });
+
+  const filteredInvoices = filteredByDateRange.filter((item) =>
+    Object.values(item).some((value) => matchesQuery(value))
   );
 
+ 
   const listContainer = {
     hidden: {
       opacity: 1,
@@ -109,7 +131,6 @@ const navigate= useNavigate()
       0,
     );
   };
-  
 
   return (
     <div>
@@ -118,22 +139,24 @@ const navigate= useNavigate()
           .map((supply) => new Date(supply.date).toISOString().split('T')[0])
           .sort();
         const fromDate = formattedSuppliesDates[0];
-        const toDate = formattedSuppliesDates[formattedSuppliesDates.length - 1];
+        const toDate =
+          formattedSuppliesDates[formattedSuppliesDates.length - 1];
 
         return (
           <div
             key={i}
             className="rounded-xl relative my-4 border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
           >
-            <div className='absolute top-5 right-6'>
-              <Tooltip placement='bottom' title="View Invoice">
-
-                <button onClick={()=>navigate(`/singleInvoice/${invoice._id}`)} className='hover:text-primary flex items-center gap-1'>
-                  <span className='text-xl'>
-
-                    <TbEyeDollar/>
+            <div className="absolute top-5 right-6">
+              <Tooltip placement="bottom" title="View Invoice">
+                <button
+                  onClick={() => navigate(`/singleInvoice/${invoice._id}`)}
+                  className="hover:text-primary flex items-center gap-1"
+                >
+                  <span className="text-xl">
+                    <TbEyeDollar />
                   </span>
-                    <span>View Invoice</span>
+                  <span>View Invoice</span>
                 </button>
               </Tooltip>
             </div>
@@ -154,7 +177,9 @@ const navigate= useNavigate()
                       {invoice.clientId._id}
                     </p>
                     <p>
-                      <span className="font-medium text-black">Name:-&nbsp;</span>
+                      <span className="font-medium text-black">
+                        Name:-&nbsp;
+                      </span>
                       {invoice.clientId.name.toUpperCase()}
                     </p>
                     <p>
@@ -172,8 +197,10 @@ const navigate= useNavigate()
                       {invoice._id}
                     </p>
                     <p>
-                      <span className="font-medium text-black">Date:-&nbsp;</span>
-                    {fromDate} - {toDate}
+                      <span className="font-medium text-black">
+                        Date:-&nbsp;
+                      </span>
+                      {fromDate} - {toDate}
                     </p>
                   </div>
                 </div>
@@ -198,7 +225,11 @@ const navigate= useNavigate()
                   <h1 className="text-center">Total</h1>
                 </div>
               </div>
-              <motion.div variants={listContainer} initial="hidden" animate={'show'}>
+              <motion.div
+                variants={listContainer}
+                initial="hidden"
+                animate={'show'}
+              >
                 {invoice.supplies && invoice.supplies.length > 0 ? (
                   invoice.supplies.map((s, i) => (
                     <motion.div
@@ -207,7 +238,9 @@ const navigate= useNavigate()
                       className="border-b flex items-center justify-between border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11"
                     >
                       <div className="min-w-[150px] font-medium text-black dark:text-white">
-                        <h1 className="text-center">{s.date.toString().split('T')[0]}</h1>
+                        <h1 className="text-center">
+                          {s.date.toString().split('T')[0]}
+                        </h1>
                       </div>
                       <div className="min-w-[150px] font-medium text-black dark:text-white">
                         <h1 className="text-center">{s.bottleType}</h1>
