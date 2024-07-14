@@ -4,7 +4,7 @@ import SidebarLinkGroup from './SidebarLinkGroup';
 import Logo from '../../images/logo/logo.png';
 import { FaBottleWater, FaFileInvoiceDollar } from 'react-icons/fa6';
 import { PiUsersThree } from "react-icons/pi";
-
+import { TbReportAnalytics } from "react-icons/tb";
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -225,7 +225,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Forms --> */}
 
               {/* <!-- Menu Item Tables --> */}
-              <li>
+              {/* <li>
                 <NavLink
                   to="/tables"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -259,21 +259,24 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   </svg>
                   Tables
                 </NavLink>
-              </li>
+              </li> */}
               {/* <!-- Menu Item Tables --> */}
               <li>
                 <NavLink
-                  to={'/bottles'}
+                  to={'/report'}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('bottles') &&
+                    pathname.includes('report') &&
                     'bg-graydark dark:bg-meta-4'
                   }`}
                 >
-                  <FaBottleWater />
-                  Bottles
+                  <div className='text-2xl'>
+
+                  <TbReportAnalytics />
+                  </div>
+                  Monthly Report
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink
                   to={'/all-invoices'}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -284,7 +287,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   <FaFileInvoiceDollar />
                   All Invoices
                 </NavLink>
-              </li>
+              </li> */}
               {/* <!-- Menu Item Settings --> */}
               <li>
                 <NavLink

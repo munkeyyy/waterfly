@@ -10,15 +10,18 @@ import LoginProvider from './Contexts/LoginContext/LoginProvider';
 import UserProvider from './Contexts/User/UserProvider';
 import { SearchProvider } from './Contexts/Search/SearchContext';
 import InvoiceProvider from './Contexts/InvoiceContext/InvoiceProvider';
+import ReportProvider from './Contexts/ReportContext/ReportProvider';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Router>
     <SearchProvider>
       <LoginProvider>
         <UserProvider>
-          <InvoiceProvider>
-            <App />
-          </InvoiceProvider>
+          <ReportProvider>
+            <InvoiceProvider>
+              <App />
+            </InvoiceProvider>
+          </ReportProvider>
         </UserProvider>
       </LoginProvider>
     </SearchProvider>

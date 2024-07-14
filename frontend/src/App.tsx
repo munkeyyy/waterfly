@@ -23,6 +23,7 @@ import Supply from './components/Supply/Supply';
 import ClientInvoice from './components/Invoice/ClientInvoice';
 import Invoice from './components/Invoice/Invoice';
 import SingleInvoice from './components/Invoice/SingleInvoice';
+import Report from './components/Report/Report';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -117,7 +118,7 @@ function App() {
           <Route
             path="/all-invoices"
             element={
-              <div >
+              <div>
                 <div>
                   <PageTitle title="Invoices | Waterfly -Waterfly Admin Dashboard" />
                   <Invoice />
@@ -149,6 +150,15 @@ function App() {
               <>
                 <PageTitle title="Tables | Waterfly - Waterfly Admin Dashboard" />
                 <Tables />
+              </>
+            }
+          />
+          <Route
+            path="/report"
+            element={
+              <>
+                <PageTitle title="Report | Waterfly- Waterfly Admin Dashboard" />
+                <Report />
               </>
             }
           />
