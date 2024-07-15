@@ -68,6 +68,8 @@ console.log("userrrrr",user)
   const deleteUser=async()=>{
     try {
       const res = await axios.delete(`http://localhost:8000/delete-user/${userData._id}`)
+      console.log(res.data.message)
+      notification.success({message:res.data.message})
     } catch (error:any) {
       console.log(error)
       notification.error({message:"error deleting user"})
