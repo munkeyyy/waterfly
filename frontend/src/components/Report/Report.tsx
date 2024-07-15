@@ -31,6 +31,7 @@ interface SupplyType {
 
 const Report = () => {
   const [report, setReport] = useState<SupplyType[]>([]);
+  const [isQuery, setIsQuery]=useState<boolean>(false)
   const { searchQuery } = useContext(SearchContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { month, year, setMonth, setYear }: any = useContext<ReportType | null>(
@@ -121,7 +122,7 @@ const Report = () => {
   const getReport = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/report/get-monthly-report?startDate=${startDate}&endDate=${endDate}`,
+        `http://localhost:8000/report/get-monthly-report?${isQuery&&`startDate=${startDate}&endDate=${endDate}`}`,
       );
       console.log(res.data.data);
       setReport(res.data.data);
@@ -132,7 +133,9 @@ const Report = () => {
   };
   console.log(startDate, endDate);
   useEffect(() => {
-    showModal();
+    // showModal();
+    setIsQuery(false)
+    getReport()
   }, []);
 
   const queryLower = searchQuery.toLowerCase();
@@ -215,19 +218,23 @@ const Report = () => {
       // Release the URL object
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      notification.error({message:"Something went wrong"})
+      notification.error({message:"Please select a month"})
       console.log(error);
     }
   };
-  const monthChange=(e:any)=>{
-    setMonth(e.target.value)
-    console.log(month)
-    getReport()
-  }
-  const yearChange=(e:any)=>{
-    setYear(e.target.value)
-    console.log(year)
-    getReport()
+  // const monthChange=(e:any)=>{
+  //   setMonth(e.target.value)
+  //   console.log(month)
+  //   getReport()
+  // }
+  // const yearChange=(e:any)=>{
+  //   setYear(e.target.value)
+  //   console.log(year)
+  //   getReport()
+  // }
+  const addQuery=()=>{
+    setIsQuery(true)
+    showModal()
   }
   return (
     <div>
@@ -246,7 +253,7 @@ const Report = () => {
         </Tooltip>
 
         <div className="flex items-center gap-4">
-          <button onClick={showModal} className='px-4 py-3 bg-blue-500 transition-all active:scale-[.99] text-white font-semibold rounded-lg'>
+          <button onClick={addQuery} className='px-4 py-3 bg-blue-500 transition-all active:scale-[.99] text-white font-semibold rounded-lg'>
             Select Month
           </button>
         </div>

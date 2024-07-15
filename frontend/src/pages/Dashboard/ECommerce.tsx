@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CardDataStats from '../../components/CardDataStats';
 import ChartOne from '../../components/Charts/ChartOne';
 import ChartThree from '../../components/Charts/ChartThree';
@@ -6,13 +6,86 @@ import ChartTwo from '../../components/Charts/ChartTwo';
 import ChatCard from '../../components/Chat/ChatCard';
 import MapOne from '../../components/Maps/MapOne';
 import TableOne from '../../components/Tables/TableOne';
+import axios from 'axios';
+
+interface Client {
+  email: string;
+  location: string;
+  name: string;
+  phone: number;
+  pincode: number;
+  _id: string;
+}
+
+interface SupplyType {
+  date: string;
+  bottleType: string;
+  price: number;
+  quantity: number;
+  _id: string;
+  clientId: Client | null;
+}
+
+interface User {
+  _id: string;
+  user_name: string;
+  email: string;
+  password: string;
+  phone: number;
+  avatar: string | null;
+}
 
 const ECommerce: React.FC = () => {
+  const [supplies, setSupplies] = useState<SupplyType[]>([]);
+  const [clients, setClients] = useState<Client[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const getSupplies = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/supplies/get-supplies`,
+      );
+      console.log(res.data);
+      setSupplies(res.data.data);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
 
+  const getClients = async () => {
+    try {
+      const res = await axios.get(`http://localhost:8000/clients/get-clients`);
+      console.log(res.data);
+      setClients(res.data.data);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+  const getUsers = async () => {
+    try {
+      const res = await axios.get(`http://localhost:8000/users/get-users`);
+      console.log(res.data);
+      setUsers(res.data.data);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getClients();
+    getUsers();
+    getSupplies();
+  }, []);
+  const quantity=supplies.reduce((total,supply)=>total+supply.quantity,0)
+ const litres = supplies.map((supply)=>supply.bottleType).map((litre)=>parseInt(litre.replace('litres',""), 10))
+ console.log("litres",litres)
+
+ const totalLitres=litres.reduce((total,litre)=>total+litre,0)
+ 
+  // console.log("bottleType", litres)
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Total views" total="$3.456K" rate="0.43%" levelUp>
+        <CardDataStats title="Total quantity supplied" total={quantity} rate="0.43%" levelUp>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -31,7 +104,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Profit" total="$45,2K" rate="4.35%" levelUp>
+        <CardDataStats title="No. of litres supplied" total={totalLitres} rate="4.35%" levelUp>
           <svg
             className="fill-primary dark:fill-white"
             width="20"
@@ -54,7 +127,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Product" total="2.450" rate="2.59%" levelUp>
+        <CardDataStats title="No. of Clients" total={clients.length} rate="2.59%" levelUp>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -73,7 +146,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Users" total="3.456" rate="0.95%" levelDown>
+        <CardDataStats title="Total Users" total={users.length} rate="0.95%" levelDown>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -103,10 +176,10 @@ const ECommerce: React.FC = () => {
         <ChartTwo />
         <ChartThree />
         <MapOne />
-        <div className="col-span-12 xl:col-span-8">
+        {/* <div className="col-span-12 xl:col-span-8">
           <TableOne />
-        </div>
-        <ChatCard />
+        </div> */}
+        {/* <ChatCard /> */}
       </div>
     </>
   );

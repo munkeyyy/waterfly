@@ -141,12 +141,16 @@ export const getMonthlyReport = async (req, res) => {
 //       });
 //     }
 const {startDate,endDate}=req.query
-const report = await supplyModel.find({
+let filter={}
+if(startDate&&endDate){
+filter={
   date:{
     $gte:startDate,
     $lt:endDate
   }
-}).populate("clientId")
+}
+}
+const report = await supplyModel.find(filter).populate("clientId")
 if(report){
   return res.status(200).json({
     data:report,
