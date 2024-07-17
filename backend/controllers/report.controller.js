@@ -150,7 +150,7 @@ filter={
   }
 }
 }
-const report = await supplyModel.find(filter).populate("clientId")
+const report = await supplyModel.find(filter).populate("clientId").sort({_id:-1})
 if(report){
   return res.status(200).json({
     data:report,

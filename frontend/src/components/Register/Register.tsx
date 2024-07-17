@@ -77,8 +77,8 @@ const Register:React.FC<SetIsChanged> = ({setIsChanged}) => {
                   console.log(res.data);
                   notification.success({ message: res.data.message });
                   // localStorage.setItem("token", res.data.token);
-                  setIsChanged(false)
-                  navigate("/login");
+                  setIsChanged(true)
+                
                 })
                 .catch((err) => {
                   console.log(err);

@@ -1,4 +1,5 @@
 import clientModel from "../models/client.model";
+import supplyModel from "../models/supply.model";
 
 export const addClient = (req, res) => {
   try {
@@ -26,7 +27,7 @@ export const addClient = (req, res) => {
 
 export const getClients=async(req,res)=>{
     try {
-        const getClientData=await clientModel.find()
+        const getClientData=await clientModel.find().sort({ _id: -1 })
         if(getClientData){
             return res.status(200).json({
                 data:getClientData,
@@ -87,6 +88,9 @@ export const deleteClient=async(req,res)=>{
     try {
         const clientId=req.params.clientId
         const deleteClientData=await clientModel.deleteOne({_id:clientId})
+        const clientSupplies = supplyModel.find({
+            clientId:clientId
+        })
         if(deleteClientData.acknowledged){
             return res.status(200).json({
                 data:deleteClientData,

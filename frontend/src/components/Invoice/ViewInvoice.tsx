@@ -149,7 +149,7 @@ const ViewInvoice: React.FC<Props> = ({ invId, handleCancel }) => {
         <div className="flex justify-center items-center">
           <button
             type="submit"
-            className="px-4 py-2 rounded-md text-white font-semibold my-3 bg-blue-500"
+            className="px-4 py-2 rounded-md text-white font-semibold my-3 bg-[#40B26E]"
           >
             Generate
           </button>

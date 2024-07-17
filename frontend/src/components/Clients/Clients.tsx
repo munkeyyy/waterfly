@@ -12,6 +12,9 @@ import { useNavigate } from 'react-router-dom';
 import { IoMdEye } from 'react-icons/io';
 import { SearchContext } from '../../Contexts/Search/SearchContext';
 import ViewInvoice from '../Invoice/ViewInvoice';
+import type { PopconfirmProps } from 'antd';
+import { Popconfirm } from 'antd';
+
 interface Client {
   email: string;
   location: string;
@@ -56,7 +59,8 @@ interface SingleSupply {
 const Clients: React.FC = () => {
   const [clients, setClients] = useState<Client[]>([]);
   const [clientsId, setClientsId] = useState<string>('');
-  const[invoiceId,setInvoiceId]=useState<string>("")
+  const [deleteId, setDeleteId] = useState<string>('');
+  const [invoiceId, setInvoiceId] = useState<string>('');
   const navigate = useNavigate();
   const [editSupply, setEditSupply] = useState<boolean>(false);
   const [singleSupply, setSingleSupply] = useState<SingleSupply[]>([]);
@@ -90,7 +94,7 @@ const Clients: React.FC = () => {
       );
       setSingleClient(res.data.data);
       setEdit(true);
-      setInvoice(false)
+      setInvoice(false);
       showModal();
       setSupply(false);
     } catch (error) {
@@ -99,8 +103,8 @@ const Clients: React.FC = () => {
   };
   const handleSupply = (id: string) => {
     setSupply(true);
-    setEdit(false)
-    setInvoice(false)
+    setEdit(false);
+    setInvoice(false);
     showModal();
     setClientsId(id);
   };
@@ -120,26 +124,29 @@ const Clients: React.FC = () => {
   useEffect(() => {
     getClients();
   }, []);
-
-  const handleDelete = async (id: string) => {
+  const deleteByClient = async (id: string) => {
     try {
+      console.log(`Attempting to delete supplies for client ID: ${id}`);
       const res = await axios.delete(
-        `http://localhost:8000/clients/delete-client/${id}`,
+        `http://localhost:8000/supplies/delete-by-client/${id}`,
       );
       console.log(res.data.message);
-      notification.success({ message: res.data.message });
-      setClients(clients.filter((client) => client._id !== id));
-    } catch (error) {
+      console.log('supplyId', id);
+      // notification.success({message:res.data.message})
+    } catch (error: any) {
       console.log(error);
     }
   };
-  
-  const handleViewInvoice =  (id: string) => {
-    setInvoice(true)
-    setEdit(false)
-    setSupply(false)
-    showModal()
-    setInvoiceId(id)
+  const handleDelete = async (id: string) => {
+    
+  };
+
+  const handleViewInvoice = (id: string) => {
+    setInvoice(true);
+    setEdit(false);
+    setSupply(false);
+    showModal();
+    setInvoiceId(id);
   };
   // useEffect(() => {
   //   handleEdit(singleClient._id)
@@ -184,6 +191,26 @@ const Clients: React.FC = () => {
     Object.values(item).some((value) => matchesQuery(value)),
   );
   console.log('filtered', filteredClients);
+  const confirm: PopconfirmProps['onConfirm'] =async (e) => {
+    console.log(e);
+    try {
+      console.log(`Attempting to delete client ID: ${deleteId}`);
+      const res = await axios.delete(
+        `http://localhost:8000/clients/delete-client/${deleteId}`,
+      );
+      console.log('clinetId', deleteId);
+      console.log(res.data.message);
+      notification.success({ message: res.data.message });
+      setClients(clients.filter((client) => client._id !==deleteId));
+      deleteByClient(deleteId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const cancel: PopconfirmProps['onCancel'] = (e) => {
+    console.log(e);
+  };
   return (
     <>
       <div className="flex items-center justify-between mb-8">
@@ -196,7 +223,7 @@ const Clients: React.FC = () => {
             setEdit(false);
             setSupply(false);
           }}
-          className="flex gap-2 font-semibold text-white transition-all px-6 py-3 bg-blue-500 rounded-md items-center active:scale-[.95]"
+          className="flex gap-2 font-semibold text-white transition-all px-6 py-3 bg-[#40B26E] rounded-md items-center active:scale-[.95]"
         >
           <span className="font-bold">
             <FaPlus />
@@ -379,7 +406,7 @@ const Clients: React.FC = () => {
 
                         <button
                           type="submit"
-                          className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-blue-500 rounded-md  active:scale-[.95]"
+                          className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-[#40B26E] rounded-md  active:scale-[.95]"
                         >
                           Add
                         </button>
@@ -579,7 +606,7 @@ const Clients: React.FC = () => {
 
                           <button
                             type="submit"
-                            className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-blue-500 rounded-md  active:scale-[.95]"
+                            className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-[#40B26E] rounded-md  active:scale-[.95]"
                           >
                             Add
                           </button>
@@ -645,6 +672,8 @@ const Clients: React.FC = () => {
                         .then((res) => {
                           // console.log(res);
                           setClients([...clients, res.data.data]);
+                          // setClients([...clients, res.data.data]);
+                          // getClients()
                           handleCancel();
                           notification.success({ message: res.data.message });
                         })
@@ -771,7 +800,7 @@ const Clients: React.FC = () => {
 
                           <button
                             type="submit"
-                            className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-blue-500 rounded-md  active:scale-[.95]"
+                            className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-[#40B26E] rounded-md  active:scale-[.95]"
                           >
                             Add
                           </button>
@@ -844,8 +873,18 @@ const Clients: React.FC = () => {
                     </button>
                   </Tooltip>
                   <Tooltip title="Delete Client">
+                    <Popconfirm
+                    placement='bottomLeft'
+                      title="Delete Client"
+                      description="Are you sure to delete this client?, This will delete all the supplies related to this client "
+                      onConfirm={confirm}
+                      onCancel={cancel}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+
                     <button
-                      onClick={() => handleDelete(client._id)}
+                      onClick={() => setDeleteId(client._id)}
                       className="hover:text-primary"
                     >
                       <svg
@@ -874,8 +913,9 @@ const Clients: React.FC = () => {
                         />
                       </svg>
                     </button>
+                    </Popconfirm>
                   </Tooltip>
-                  <Tooltip title="View Invoice">
+                  <Tooltip title="Generate Invoice">
                     <button
                       onClick={() => handleViewInvoice(client._id)}
                       className="hover:text-primary"

@@ -1,11 +1,14 @@
 import axios from 'axios';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import userThree from '../images/user/user-03.png';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Formik, FormikErrors } from 'formik';
 import { Modal, notification } from 'antd';
 import { FiEye } from 'react-icons/fi';
 import { FiEyeOff } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../Contexts/User/UserContext';
+import { LoginContext } from '../Contexts/LoginContext/LoginContext';
 interface User {
   _id: string;
   user_name: string;
@@ -23,8 +26,11 @@ interface FormValues {
 }
 
 const Settings = () => {
+  const navigate=useNavigate()
   const userData = JSON.parse(localStorage.getItem('user'));
-  const [user, setUser] = useState<User>({
+  const userContext = useContext(UserContext);
+  const loginContext = useContext(LoginContext); 
+   const [user, setUser] = useState<User>({
     _id: '',
     user_name: '',
     email: '',
@@ -35,7 +41,11 @@ const Settings = () => {
   const [view, setView] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-
+  if (!userContext || !loginContext) {
+    throw new Error('SomeComponent must be used within UserProvider and LoginProvider');
+}
+  // const { user, setUser } = userContext;
+  const { setIsLoggedIn} = loginContext;
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -67,9 +77,13 @@ console.log("userrrrr",user)
   };
   const deleteUser=async()=>{
     try {
-      const res = await axios.delete(`http://localhost:8000/delete-user/${userData._id}`)
+      const res = await axios.delete(`http://localhost:8000/users/delete-user/${userData._id}`)
       console.log(res.data.message)
+
       notification.success({message:res.data.message})
+      localStorage.clear()
+      setIsLoggedIn(false)
+      navigate("/auth")
     } catch (error:any) {
       console.log(error)
       notification.error({message:"error deleting user"})
@@ -254,7 +268,7 @@ console.log("userrrrr",user)
                             <div className="w-full">
                               <input
                                 className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                                type={view ? 'password' : 'text'}
+                                type={view ? 'text' : 'password'}
                                 name="password"
                                 id="password"
                                 // placeholder="Devid Jhon"
@@ -375,12 +389,12 @@ console.log("userrrrr",user)
                       </div> */}
 
                       <div className="flex justify-end gap-4.5">
-                        <button
-                          className="flex active:text-red-500 active:border-red-500 justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+                        <div
+                          className="flex cursor-pointer active:text-red-500 active:border-red-500 justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                           onClick={showModal}
                         >
                           Delete
-                        </button>
+                        </div>
                         <button
                           className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
                           type="submit"
@@ -403,8 +417,8 @@ console.log("userrrrr",user)
          <div className='p-4'>
           <h1 className='text-black text-lg font-bold capitalize'>Are you sure want to delete your account?</h1>
           <div className='flex items-center m-4 justify-end gap-4'>
-                  <div className='border-[2px] font-semibold text-red-500 border-red-500 px-4 py-2 rounded-lg' onClick={deleteUser}>Yes</div>
-                  <div className='border-[2px] font-semibold border-balck px-4 py-2 rounded-lg' onClick={handleCancel}> No</div>
+                  <div className='border-[2px] cursor-pointer font-semibold text-red-500 border-red-500 px-4 py-2 rounded-lg' onClick={deleteUser}>Yes</div>
+                  <div className='border-[2px] cursor-pointer font-semibold border-balck px-4 py-2 rounded-lg' onClick={handleCancel}> No</div>
           </div>
          </div>
         </Modal>

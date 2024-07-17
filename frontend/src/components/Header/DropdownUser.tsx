@@ -32,7 +32,7 @@ const DropdownUser = () => {
         </span>
 
         <span className="h-12 w-12 rounded-full overflow-hidden">
-          <img src={`https://ui-avatars.com/api/name=${user?.user_name}&background=0D8ABC&color=fff`} alt="User" />
+          <img src={`https://ui-avatars.com/api/?name=${user?.user_name}&background=0D8ABC&color=fff`} alt="User" />
         </span>
 
         <svg
@@ -83,7 +83,7 @@ const DropdownUser = () => {
                 My Profile
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 to="#"
                 className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
@@ -128,7 +128,7 @@ const DropdownUser = () => {
                 </svg>
                 Account Settings
               </Link>
-            </li>
+            </li> */}
           </ul>
           <button onClick={()=>{
             localStorage.clear()

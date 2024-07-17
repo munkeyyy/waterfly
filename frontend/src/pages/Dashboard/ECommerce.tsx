@@ -76,7 +76,7 @@ const ECommerce: React.FC = () => {
     getSupplies();
   }, []);
   const quantity=supplies.reduce((total,supply)=>total+supply.quantity,0)
- const litres = supplies.map((supply)=>supply.bottleType).map((litre)=>parseInt(litre.replace('litres',""), 10))
+  const litres = supplies.map((supply)=>supply.bottleType).map((litre)=>parseInt(litre.replace('litres',""), 10))
  console.log("litres",litres)
 
  const totalLitres=litres.reduce((total,litre)=>total+litre,0)

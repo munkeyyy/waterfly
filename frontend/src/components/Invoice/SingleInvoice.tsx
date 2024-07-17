@@ -178,18 +178,9 @@ const SingleInvoice = () => {
                 Send Invoice
               </button>
             </Tooltip>
-            <Tooltip placement="bottom" title="Delete Invoice">
-              <button
-                onClick={()=>handleDeleteInvoice(invoice._id)}
-                className="text-lg flex items-center gap-2 hover:text-danger  transitaion-all active:scale-[0.97]"
-              >
-                <span>
-                  {/* <CgMailForward /> */}
-                  <TbFileShredder />
-                </span>
-                Delete Invoice
-              </button>
-            </Tooltip>
+
+           
+
           </div>
           <div className="my-4">
             <div className="flex items-center justify-between">
@@ -332,7 +323,7 @@ const SingleInvoice = () => {
           </h1>
           <button
             onClick={generateMonthlyInvoice}
-            className="flex gap-2 font-semibold text-white transition-all px-6 py-3 bg-blue-500 rounded-md items-center active:scale-[.95]"
+            className="flex gap-2 font-semibold text-white transition-all px-6 py-3 bg-[#40B26E] rounded-md items-center active:scale-[.95]"
           >
             Generate Monthly Invoice
           </button>

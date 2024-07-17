@@ -172,7 +172,7 @@ const Login:React.FC<SetIsChanged> = ({setIsChanged}) => {
             )}
           </Formik>
         </div>
-        <div  className="flex p-4 mt-6 items-center gap-2 text-[#2e2e2e] hover:text-gray-600">
+        {/* <div  className="flex p-4 mt-6 items-center gap-2 text-[#2e2e2e] hover:text-gray-600">
           Don't have an account?{" "}
           <div onClick={()=>{
             setIsChanged(false)
@@ -180,7 +180,7 @@ const Login:React.FC<SetIsChanged> = ({setIsChanged}) => {
           }} className="font-semibold cursor-pointer text-black relative">
             Register
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

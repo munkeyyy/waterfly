@@ -153,3 +153,27 @@ export const deleteSupply = async (req, res) => {
       });
   }
 };
+export const deleteByClientId = async (req, res) => {
+  try {
+    console.log(req.params.clientId)
+    const clientId = req.params.clientId;
+    console.log(`Attempting to delete supplies for client ID: ${clientId}`);
+    const deletedSupply = await supplyModel.deleteMany({ clientId: clientId });
+    console.log(`Deleted supplies: ${JSON.stringify(deletedSupply)}`);
+    if (deletedSupply.acknowledged) {
+      return res.status(200).json({
+        data: deletedSupply,
+        message: "supplies related to client deleted successfully",
+      });
+    }
+    return res.status(400).json({
+        message: "something went wroong",
+      });
+  } catch (error) {
+    console.error(`Error deleting supplies for client ID: ${clientId} - ${error.message}`);
+    return res.status(500).json({
+        message: error.message,
+      });
+  }
+};
+

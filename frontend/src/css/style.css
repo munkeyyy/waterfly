@@ -230,3 +230,13 @@ span.flatpickr-weekday,
 .ant-modal-footer{
   display: none;
 }
+
+.ant-modal-mask {
+  background-color: rgba(0, 0, 0, -0.55) !important;
+}
+
+.ant-btn-primary {
+  color: #fff !important;
+  background: #40B26E !important;
+  box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1) !important;
+}

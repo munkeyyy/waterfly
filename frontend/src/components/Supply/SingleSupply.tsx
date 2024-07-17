@@ -158,6 +158,7 @@ const SingleSupply = () => {
   }
 
   console.log(filteredSupply);
+  console.log("ssss",singlebottle.date)
   return (
     <div>
       <div className="my-4">
@@ -186,6 +187,7 @@ const SingleSupply = () => {
         <motion.div variants={listContainer} initial="hidden" animate={'show'}>
           {filteredSupply && filteredSupply.length > 0 ? (
             filteredSupply.map((s, i) => (
+              console.log(s.date),
               <motion.div
                 key={i}
                 variants={listItem}
@@ -204,7 +206,7 @@ const SingleSupply = () => {
                   <h1>{s.quantity}</h1>
                 </div>
 
-                <div className="flex items-centermin-w-[150px] space-x-3.5">
+                <div className="flex items-centermin-w-[150px] space-x-5.5">
                   <button onClick={()=>handleSingleSupply(s._id)} className="hover:text-primary">
                     <FaPencilAlt />
                   </button>
@@ -235,7 +237,7 @@ const SingleSupply = () => {
                       />
                     </svg>
                   </button>
-                  <button className="hover:text-primary">
+                  {/* <button className="hover:text-primary">
                     <svg
                       className="fill-current"
                       width="18"
@@ -253,7 +255,7 @@ const SingleSupply = () => {
                         fill=""
                       />
                     </svg>
-                  </button>
+                  </button> */}
                 </div>
                 <Modal
                   title={'Edit Supply'}
@@ -265,7 +267,7 @@ const SingleSupply = () => {
                     <Formik
                       enableReinitialize
                       initialValues={{
-                        date:singlebottle.date|| '',
+                        date:singlebottle.date.toString().split('T')[0]|| '',
                         quantity:singlebottle.quantity|| null,
                         bottleType:singlebottle.bottleType|| '',
                         price:singlebottle.price|| null,
@@ -431,7 +433,7 @@ const SingleSupply = () => {
 
                             <button
                               type="submit"
-                              className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-blue-500 rounded-md  active:scale-[.95]"
+                              className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-[#40B26E] rounded-md  active:scale-[.95]"
                             >
                               Add
                             </button>
