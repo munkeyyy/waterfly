@@ -433,7 +433,7 @@ const SingleSupply = () => {
 
                             <button
                               type="submit"
-                              className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-[#40B26E] rounded-md  active:scale-[.95]"
+                              className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-[#1C2434] rounded-md  active:scale-[.95]"
                             >
                               Add
                             </button>

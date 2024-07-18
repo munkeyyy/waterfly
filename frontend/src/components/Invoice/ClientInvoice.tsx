@@ -325,7 +325,7 @@ const ClientInvoice = () => {
             </h1>
             <button
               onClick={generateMonthlyInvoice}
-              className="flex gap-2 font-semibold text-white transition-all px-6 py-3 bg-[#40B26E] rounded-md items-center active:scale-[.95]"
+              className="flex gap-2 font-semibold text-white transition-all px-6 py-3 bg-[#1C2434] rounded-md items-center active:scale-[.95]"
             >
               Generate Monthly Invoice
             </button>

@@ -223,7 +223,7 @@ const Clients: React.FC = () => {
             setEdit(false);
             setSupply(false);
           }}
-          className="flex gap-2 font-semibold text-white transition-all px-6 py-3 bg-[#40B26E] rounded-md items-center active:scale-[.95]"
+          className="flex gap-1 text-sm font-semibold text-white transition-all px-6 py-3 bg-[#1C2434] rounded-md items-center active:scale-[.95]"
         >
           <span className="font-bold">
             <FaPlus />
@@ -238,7 +238,7 @@ const Clients: React.FC = () => {
             : edit
             ? 'Edit Client'
             : supply
-            ? 'Add Supply'
+            ? 'What have you supplied?'
             : 'Add Client'
         }
         open={isModalOpen}
@@ -406,7 +406,7 @@ const Clients: React.FC = () => {
 
                         <button
                           type="submit"
-                          className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-[#40B26E] rounded-md  active:scale-[.95]"
+                          className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-[#1C2434] rounded-md  active:scale-[.95]"
                         >
                           Add
                         </button>
@@ -606,7 +606,7 @@ const Clients: React.FC = () => {
 
                           <button
                             type="submit"
-                            className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-[#40B26E] rounded-md  active:scale-[.95]"
+                            className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-[#1C2434] rounded-md  active:scale-[.95]"
                           >
                             Add
                           </button>
@@ -800,7 +800,7 @@ const Clients: React.FC = () => {
 
                           <button
                             type="submit"
-                            className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-[#40B26E] rounded-md  active:scale-[.95]"
+                            className="font-semibold mx-auto text-white transition-all px-6 py-3 bg-[#1C2434] rounded-md  active:scale-[.95]"
                           >
                             Add
                           </button>
