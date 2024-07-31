@@ -130,7 +130,7 @@ const Report = () => {
   const getReport = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/report/get-monthly-report?${
+        `https://waterfly.onrender.com/report/get-monthly-report?${
           isQuery && `startDate=${startDate}&endDate=${endDate}`
         }`,
       );
@@ -208,7 +208,7 @@ const Report = () => {
   const downloadReport = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/report/download-report?startDate=${startDate}&endDate=${endDate}`,
+        `https://waterfly.onrender.com/report/download-report?startDate=${startDate}&endDate=${endDate}`,
         { responseType: 'blob' }, // Important: set the response type to 'blob'
       );
 
@@ -255,7 +255,7 @@ const Report = () => {
     console.log(e);
     try {
       const res = await axios.delete(
-        `http://localhost:8000/supplies/delete-supply/${deleteId}`,
+        `https://waterfly.onrender.com/supplies/delete-supply/${deleteId}`,
       );
       notification.success({message:res.data.message});
       getReport();

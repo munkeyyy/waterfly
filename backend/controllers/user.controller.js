@@ -71,7 +71,7 @@ export const getUsers = async (req, res) => {
       return res.status(200).json({
         data: usersData,
         message: "users fecthed successfully!",
-        // filepath: "http://localhost:8000/uploads/",
+        // filepath: "https://waterfly.onrender.com/uploads/",
       });
     }
     return res.status(400).json({
@@ -92,7 +92,7 @@ export const getSingleUser = async (req, res) => {
         return res.status(200).json({
           data: usersData,
           message: "users fecthed successfully!",
-          // filepath: "http://localhost:8000/uploads/users/", 
+          // filepath: "https://waterfly.onrender.com/uploads/users/", 
         });
       }
       return res.status(400).json({

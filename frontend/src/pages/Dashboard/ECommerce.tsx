@@ -42,7 +42,7 @@ const ECommerce: React.FC = () => {
   const getSupplies = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/supplies/get-supplies`,
+        `https://waterfly.onrender.com/supplies/get-supplies`,
       );
       console.log(res.data);
       setSupplies(res.data.data);
@@ -53,7 +53,7 @@ const ECommerce: React.FC = () => {
 
   const getClients = async () => {
     try {
-      const res = await axios.get(`http://localhost:8000/clients/get-clients`);
+      const res = await axios.get(`https://waterfly.onrender.com/clients/get-clients`);
       console.log(res.data);
       setClients(res.data.data);
     } catch (error: any) {
@@ -62,7 +62,7 @@ const ECommerce: React.FC = () => {
   };
   const getUsers = async () => {
     try {
-      const res = await axios.get(`http://localhost:8000/users/get-users`);
+      const res = await axios.get(`https://waterfly.onrender.com/users/get-users`);
       console.log(res.data);
       setUsers(res.data.data);
     } catch (error: any) {

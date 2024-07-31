@@ -60,7 +60,7 @@ const Settings = () => {
   const getSinglUser = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/users/get-users/${userData._id}`,
+        `https://waterfly.onrender.com/users/get-users/${userData._id}`,
       );
       console.log('suer', res.data.data);
       setUser(res.data.data);
@@ -77,7 +77,7 @@ console.log("userrrrr",user)
   };
   const deleteUser=async()=>{
     try {
-      const res = await axios.delete(`http://localhost:8000/users/delete-user/${userData._id}`)
+      const res = await axios.delete(`https://waterfly.onrender.com/users/delete-user/${userData._id}`)
       console.log(res.data.message)
 
       notification.success({message:res.data.message})
@@ -148,7 +148,7 @@ console.log("userrrrr",user)
                     //   }, 400);
                     axios
                       .put(
-                        `http://localhost:8000/users/update-user/${userData._id}`,
+                        `https://waterfly.onrender.com/users/update-user/${userData._id}`,
                         {
                           user_name: values.user_name,
                           email: values.email,

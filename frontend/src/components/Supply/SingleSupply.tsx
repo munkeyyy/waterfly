@@ -1,4 +1,4 @@
-import { Modal, notification } from 'antd';
+import { Modal, notification, Popconfirm, PopconfirmProps, Tooltip } from 'antd';
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -35,6 +35,7 @@ interface Client {
 }
 const SingleSupply = () => {
   const { clientId } = useParams();
+  const[deleteId,setDeleteId]=useState<string>("")
   const [singlebottle,setSingleBottle]=useState<SupplyValues>({
     date: "",
     bottleType: "",
@@ -67,7 +68,7 @@ const SingleSupply = () => {
   const handleSingleSupply=async(id:any)=>{
     try {
 
-      const res= await axios.get(`http://localhost:8000/supplies/get-supplies/${id}`)
+      const res= await axios.get(`https://waterfly.onrender.com/supplies/get-supplies/${id}`)
       console.log(res.data.data)
       setSingleBottle(res.data.data)
       showModal()
@@ -80,7 +81,7 @@ const SingleSupply = () => {
   const getClient = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/clients/get-clients/${clientId}`,
+        `https://waterfly.onrender.com/clients/get-clients/${clientId}`,
       );
       console.log(res.data.data);
       setClient(res.data.data);
@@ -91,7 +92,7 @@ const SingleSupply = () => {
   const getClientSupplies = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/supplies/client-supplies/${clientId}`,
+        `https://waterfly.onrender.com/supplies/client-supplies/${clientId}`,
       );
       console.log(res.data.data);
      
@@ -149,16 +150,27 @@ const SingleSupply = () => {
   const filteredSupply = supply.filter((item) =>
     Object.values(item).some((value) => matchesQuery(value)),
   );
-  const handleSupplyDelete=async(id:any)=>{
-    const res=await axios.delete(`http://localhost:8000/supplies/delete-supply/${id}`)
-    notification.success({message:res.data.message})
-    filteredSupply.filter((supply)=>supply._id!==id)
-    getClientSupplies()
-    
-  }
+
 
   console.log(filteredSupply);
   console.log("ssss",singlebottle.date)
+  const confirm: PopconfirmProps['onConfirm'] = async (e) => {
+    console.log(e);
+    try {
+      const res = await axios.delete(
+        `https://waterfly.onrender.com/supplies/delete-supply/${deleteId}`,
+      );
+      notification.success({message:res.data.message});
+      getClientSupplies();
+      // notification.success({message:res.data.message})
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const cancel: PopconfirmProps['onCancel'] = (e) => {
+    console.log(e);
+  };
   return (
     <div>
       <div className="my-4">
@@ -210,7 +222,19 @@ const SingleSupply = () => {
                   <button onClick={()=>handleSingleSupply(s._id)} className="hover:text-primary">
                     <FaPencilAlt />
                   </button>
-                  <button onClick={()=>handleSupplyDelete(s._id)} className="hover:text-primary">
+                  <Tooltip title="Delete Supply">
+                  <Popconfirm
+                      placement="bottomLeft"
+                      title="Delete supply"
+                      description="Are you sure to delete this supply?, This will delete the supply related to this client "
+                      onConfirm={confirm}
+                      onCancel={cancel}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+
+
+                  <button onClick={()=>setDeleteId(s._id)} className="hover:text-primary">
                     <svg
                       className="fill-current"
                       width="18"
@@ -237,6 +261,8 @@ const SingleSupply = () => {
                       />
                     </svg>
                   </button>
+                    </Popconfirm>
+                  </Tooltip>
                   {/* <button className="hover:text-primary">
                     <svg
                       className="fill-current"
@@ -304,7 +330,7 @@ const SingleSupply = () => {
 
                         axios
                           .put(
-                            `http://localhost:8000/supplies/update-supply/${s._id}`,
+                            `https://waterfly.onrender.com/supplies/update-supply/${s._id}`,
                             values,
                           )
                           .then((res) => {

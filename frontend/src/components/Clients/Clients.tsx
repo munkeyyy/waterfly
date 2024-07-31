@@ -90,7 +90,7 @@ const Clients: React.FC = () => {
   const handleEdit = async (id: any) => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/clients/get-clients/${id}`,
+        `https://waterfly.onrender.com/clients/get-clients/${id}`,
       );
       setSingleClient(res.data.data);
       setEdit(true);
@@ -114,7 +114,7 @@ const Clients: React.FC = () => {
   };
   const getClients = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/clients/get-clients');
+      const res = await axios.get('https://waterfly.onrender.com/clients/get-clients');
       console.log(res.data.data);
       setClients(res.data.data);
     } catch (error) {
@@ -128,7 +128,7 @@ const Clients: React.FC = () => {
     try {
       console.log(`Attempting to delete supplies for client ID: ${id}`);
       const res = await axios.delete(
-        `http://localhost:8000/supplies/delete-by-client/${id}`,
+        `https://waterfly.onrender.com/supplies/delete-by-client/${id}`,
       );
       console.log(res.data.message);
       console.log('supplyId', id);
@@ -196,7 +196,7 @@ const Clients: React.FC = () => {
     try {
       console.log(`Attempting to delete client ID: ${deleteId}`);
       const res = await axios.delete(
-        `http://localhost:8000/clients/delete-client/${deleteId}`,
+        `https://waterfly.onrender.com/clients/delete-client/${deleteId}`,
       );
       console.log('clinetId', deleteId);
       console.log(res.data.message);
@@ -289,7 +289,7 @@ const Clients: React.FC = () => {
                     // Append image file
 
                     axios
-                      .post(`http://localhost:8000/supplies/add-supply`, values)
+                      .post(`https://waterfly.onrender.com/supplies/add-supply`, values)
                       .then((res) => {
                         console.log(res.data.data);
                         // setClients([...clients, res.data.data]);
@@ -470,7 +470,7 @@ const Clients: React.FC = () => {
 
                       axios
                         .put(
-                          `http://localhost:8000/clients/update-client/${singleClient._id}`,
+                          `https://waterfly.onrender.com/clients/update-client/${singleClient._id}`,
                           values,
                         )
                         .then((res) => {
@@ -666,7 +666,7 @@ const Clients: React.FC = () => {
 
                       axios
                         .post(
-                          'http://localhost:8000/clients/add-client',
+                          'https://waterfly.onrender.com/clients/add-client',
                           values,
                         )
                         .then((res) => {
