@@ -25,12 +25,14 @@ A comprehensive web application for managing water supply orders, billing, and c
 - **React + Vite** - For building a fast, modern user interface
 - **Tailwind CSS** - For responsive and beautiful styling
 - **Graph.js** - For data visualization and analytics
+- **Typescript**- For type safety
 
 ### Backend
 - **Node.js** - Runtime environment
 - **Express.js** - Web application framework
 - **Node Mailer** - Email service integration
 - **PDF.js** - PDF generation and handling
+- **EXCEL.js** - CSV genration and handling
 
 
 ## 📱 Usage
